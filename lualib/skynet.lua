@@ -133,6 +133,10 @@ local function co_create(f)
 					session_coroutine_address[co] = nil
 				end
 
+				if on_coroutine_destory then
+					on_coroutine_destory()
+				end
+
 				-- recycle co into pool
 				f = nil
 				coroutine_pool[#coroutine_pool+1] = co
