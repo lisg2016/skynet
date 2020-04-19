@@ -110,7 +110,7 @@ local coroutine_pool = setmetatable({}, { __mode = "kv" })
 local function co_create(f)
 	local co = tremove(coroutine_pool)
 	if co == nil then
-		co = coroutine_create(function(...)
+		co = coroutine.create(function(...)
 			f(...)
 			while true do
 				local session = session_coroutine_id[co]
@@ -131,10 +131,6 @@ local function co_create(f)
 				if address then
 					session_coroutine_id[co] = nil
 					session_coroutine_address[co] = nil
-				end
-
-				if on_coroutine_destory then
-					on_coroutine_destory()
 				end
 
 				-- recycle co into pool
